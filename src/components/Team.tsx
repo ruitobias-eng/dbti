@@ -9,12 +9,32 @@ export default function Team() {
   const { t } = useLanguage();
   const { theme } = useTheme();
 
-  // Cargos da equipe
-  const roles = [
-    "Engenheiro Automação",
-    "Engenheiro Computação",
-    "Engenheiro Elétrico",
-    "Analista Infraestrutura",
+  // Especialidades da equipe
+  const members = [
+    {
+      role: "Engenheiro Automação",
+      area: "Automação Industrial | CLPs | SCADA | Indústria 4.0",
+      description:
+        "Atuação em soluções de automação industrial, desenvolvimento e integração de sistemas de controle, programação de CLPs, supervisórios SCADA e redes industriais. Foco em otimização de processos, eficiência operacional e integração de tecnologias para ambientes industriais inteligentes.",
+    },
+    {
+      role: "Engenheiro Computação",
+      area: "Engenharia | Inovação Tecnológica | BI",
+      description:
+        "Especialista em soluções tecnológicas para engenharia de computação, IoT e sistemas embarcados, com sólida experiência em integração de sistemas, engenharia de computação e análise de dados aplicada ao setor financeiro. Combinando expertise técnica e visão estratégica, atua na interseção entre tecnologia e finanças, entregando projetos com eficiência e inovação.",
+    },
+    {
+      role: "Engenheiro Elétrico",
+      area: "Engenharia Elétrica | Sistemas Elétricos | Automação",
+      description:
+        "Atuação em projetos de engenharia elétrica, desenvolvimento e integração de sistemas elétricos, instalações, comandos e painéis de controle. Foco em segurança, confiabilidade, eficiência energética e soluções tecnológicas aplicadas a ambientes industriais e corporativos.",
+    },
+    {
+      role: "Analista Infraestrutura",
+      area: "TI | Infraestrutura | Cloud | Cibersegurança",
+      description:
+        "Atuação em tecnologia da informação e infraestrutura de TI, administração de servidores, redes, ambientes em nuvem, bancos de dados e segurança da informação. Foco em disponibilidade, desempenho, continuidade operacional e proteção dos ambientes tecnológicos.",
+    },
   ];
 
   // Paletas de cores por tema
@@ -25,6 +45,7 @@ export default function Team() {
     borderCard: string;
     textMain: string;
     textSecondary: string;
+    accentText: string;
     glow: string;
   }> = {
     light: {
@@ -34,6 +55,7 @@ export default function Team() {
       borderCard: "#E5E7EB",
       textMain: "#000000",
       textSecondary: "#374151",
+      accentText: "#EAB308",
       glow: "bg-yellow-400/10 blur-3xl",
     },
     dark: {
@@ -43,6 +65,7 @@ export default function Team() {
       borderCard: "#27272A",
       textMain: "#FFFFFF",
       textSecondary: "#D1D5DB",
+      accentText: "#FDE047",
       glow: "bg-yellow-500/10 blur-3xl",
     },
   };
@@ -116,11 +139,12 @@ export default function Team() {
           </p>
         </motion.div>
 
-        {/* Cards de cargos */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {roles.map((role, index) => (
+        {/* Cards da equipe */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          {members.map((member, index) => (
             <motion.div
-              key={index}
+              key={member.role}
               initial={{
                 opacity: 0,
                 x: index % 2 === 0 ? -30 : 30,
@@ -134,48 +158,81 @@ export default function Team() {
                 delay: index * 0.2,
               }}
               viewport={{ once: true }}
+              className="h-full"
             >
               <Card
-                className="h-full transition-all duration-300 group border-2 hover:scale-[1.02]"
+                className="h-full transition-all duration-300 group border-2 hover:scale-[1.01]"
                 style={{
                   backgroundColor: colors.bgCard,
                   borderColor: colors.borderCard,
                 }}
               >
-                <CardContent className="p-10 flex items-center justify-center min-h-[180px]">
-                  <div className="text-center">
+                <CardContent className="p-8 md:p-10">
 
-                    {/* Detalhe visual */}
-                    <div
-                      className="h-1 w-16 mx-auto mb-6"
-                      style={{
-                        backgroundColor: colors.primary,
-                        boxShadow: `0 0 15px ${colors.primary}66`,
-                      }}
-                    />
+                  {/* Cabeçalho do card */}
+                  <div className="flex items-start gap-6 mb-8">
 
-                    {/* Cargo */}
-                    <h3
-                      className="text-2xl md:text-3xl font-bold"
-                      style={{ color: colors.textMain }}
-                    >
-                      {role}
-                    </h3>
+                    {/* Elemento visual amarelo */}
+                    <div className="relative flex-shrink-0">
+                      <div
+                        className="w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center relative z-10"
+                        style={{
+                          backgroundColor: colors.primary,
+                          boxShadow: `0 0 25px ${colors.primary}55`,
+                        }}
+                      >
+                        <div
+                          className="w-10 h-10 rounded-full border-[5px]"
+                          style={{
+                            borderColor: "#000000",
+                          }}
+                        />
+                      </div>
 
-                    {/* Linha inferior */}
-                    <div
-                      className="h-1 w-10 mx-auto mt-6 opacity-50"
-                      style={{
-                        backgroundColor: colors.primary,
-                      }}
-                    />
+                      <div
+                        className={`absolute inset-0 rounded-2xl ${colors.glow} scale-95`}
+                      />
+                    </div>
+
+                    {/* Cargo e especialidade */}
+                    <div className="flex-1 min-w-0">
+                      <h3
+                        className="text-2xl md:text-3xl font-bold mb-3"
+                        style={{ color: colors.textMain }}
+                      >
+                        {member.role}
+                      </h3>
+
+                      <p
+                        className="font-semibold text-sm md:text-base leading-relaxed mb-4"
+                        style={{ color: colors.primary }}
+                      >
+                        {member.area}
+                      </p>
+
+                      <div
+                        className="h-1 w-16"
+                        style={{
+                          backgroundColor: colors.primary,
+                        }}
+                      />
+                    </div>
                   </div>
+
+                  {/* Descrição profissional */}
+                  <p
+                    className="leading-relaxed text-base md:text-lg"
+                    style={{ color: colors.textSecondary }}
+                  >
+                    {member.description}
+                  </p>
+
                 </CardContent>
               </Card>
             </motion.div>
           ))}
-        </div>
 
+        </div>
       </div>
     </section>
   );
